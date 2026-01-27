@@ -167,6 +167,22 @@ h1 {
     cursor: pointer;
 }
 
+.bgm-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 14px;
+}
+
 /* 결과 */
 .result {
     text-align: center;
@@ -225,8 +241,6 @@ h1 {
 </div>
 
 <!-- 관리자 화면 -->
-<div id="admin" class="screen">
-    <div class="container">
 
         <!-- 관리자 상단바 (처음엔 숨김) -->
         <div id="adminTopBar" class="top-bar" style="display:none; justify-content:space-between;">
@@ -334,9 +348,36 @@ h1 {
     </div>
 </div>
 
+<button id="musicBtn" class="bgm-btn">🎵 BGM ON</button>
+
+<audio id="bgm" loop>
+  <source src="bgm2.mp3" type="audio/mpeg" />
+</audio>
+
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxwc51HzmqeXbVg15MYleaO0e6-hI6AenqbBxpwE278QyjhTbIpa5jmL6jBa1AWfMzeTw/exec";
 let currentUser = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bgm = document.getElementById("bgm");
+  const musicBtn = document.getElementById("musicBtn");
+  let isPlaying = false;
+
+  if (!musicBtn) return; // 관리자 아닐 때 대비
+
+  musicBtn.addEventListener("click", async () => {
+    if (!isPlaying) {
+      bgm.volume = 0.25;
+      await bgm.play(); // 모바일 대응
+      musicBtn.textContent = "🔇 BGM OFF";
+    } else {
+      bgm.pause();
+      musicBtn.textContent = "🎵 BGM ON";
+    }
+    isPlaying = !isPlaying;
+  });
+});
+
 /* 단서 활성화 상태 */
 const clueState = {
     1: false,
