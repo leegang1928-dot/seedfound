@@ -71,6 +71,22 @@ h1 {
     border-color: #c9a46a;
 }
 
+.bgm-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 14px;
+}
+
 /* 상단 */
 .top-bar {
     display: flex;
@@ -167,22 +183,6 @@ h1 {
     cursor: pointer;
 }
 
-.bgm-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 9999;
-
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  font-size: 14px;
-}
-
 /* 결과 */
 .result {
     text-align: center;
@@ -241,6 +241,8 @@ h1 {
 </div>
 
 <!-- 관리자 화면 -->
+<div id="admin" class="screen">
+    <div class="container">
 
         <!-- 관리자 상단바 (처음엔 숨김) -->
         <div id="adminTopBar" class="top-bar" style="display:none; justify-content:space-between;">
@@ -355,8 +357,17 @@ h1 {
 </audio>
 
 <script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxwc51HzmqeXbVg15MYleaO0e6-hI6AenqbBxpwE278QyjhTbIpa5jmL6jBa1AWfMzeTw/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxKMCrlRbFfOOy6RvTKn8jsfJrXQv0g8kytyhpP-CRyIkwpbPvi8QnoVpM5HCo6s_EzWw/exec";
 let currentUser = "";
+/* 단서 활성화 상태 */
+const clueState = {
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   const bgm = document.getElementById("bgm");
@@ -377,16 +388,6 @@ document.addEventListener("DOMContentLoaded", () => {
     isPlaying = !isPlaying;
   });
 });
-
-/* 단서 활성화 상태 */
-const clueState = {
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false
-};
 
 /* 단서 내용 */
 const clueContent = {
@@ -530,14 +531,29 @@ function closeModal() {
 
 function confirmChoice() {
     closeModal();
+
+    const isCorrect = (chosen === "이강");
+
+    // 👉 결과 화면 문구
     let text = "";
-    if (chosen === "이강") {
+    if (isCorrect) {
         text = "이강은 범인이 맞습니다.";
     } else {
         text = `${chosen}은 범인이 아니였습니다.`;
     }
+
     document.getElementById("resultText").innerText = text;
     showScreen("result");
+
+    // 👉 GAS에 기록 남기기 (I~L열)
+    fetch(
+        `${GAS_URL}` +
+        `?team=${encodeURIComponent(currentUser)}` +
+        `&suspect=${encodeURIComponent(chosen)}` +
+        `&correct=${isCorrect}`
+    ).catch(err => {
+        console.error("선택 기록 실패:", err);
+    });
 }
 
 async function checkLogin() {
@@ -579,3 +595,4 @@ async function checkLogin() {
 
 </body>
 </html>
+
