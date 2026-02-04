@@ -319,12 +319,12 @@ h1 {
         </div>
 
         <div class="profile-list">
-            <div class="profile" onclick="selectSuspect('일강')">일강</div>
-            <div class="profile" onclick="selectSuspect('이강')">이강</div>
-            <div class="profile" onclick="selectSuspect('삼강')">삼강</div>
-            <div class="profile" onclick="selectSuspect('사강')">사강</div>
-            <div class="profile" onclick="selectSuspect('오강')">오강</div>
-            <div class="profile" onclick="selectSuspect('육강')">육강</div>
+            <div class="profile" onclick="selectSuspect('양은별')">양은별</div>
+            <div class="profile" onclick="selectSuspect('심준영')">심준영</div>
+            <div class="profile" onclick="selectSuspect('김도헌')">김도헌</div>
+            <div class="profile" onclick="selectSuspect('이현승')">이현승</div>
+            <div class="profile" onclick="selectSuspect('김서연')">김서연</div>
+            <div class="profile" onclick="selectSuspect('유현지')">유현지</div>
         </div>
     </div>
 </div>
@@ -391,12 +391,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* 단서 내용 */
 const clueContent = {
-    1: "단서 1: 사건 발생 시간은 밤 11시였다.",
-    2: "단서 2: 현장에서 깨진 시계가 발견되었다.",
-    3: "단서 3: 범인은 왼손잡이일 가능성이 높다.",
-    4: "단서 4: 용의자 중 한 명은 알리바이가 거짓이다.",
-    5: "단서 5: 범행 도구는 방 안에 있었다.",
-    6: "단서 6: 범인은 피해자와 아는 사이였다."
+    1: "단서 1: 범인은 키가 컸던거 같아",
+    2: "단서 2: 범인은 사투리를 안썼던 것 같아",
+    3: "단서 3: 범인은 여자인 것 같아",
+    4: "단서 4: 범인은 쌍커풀이 있었던 것 같아",
+    5: "단서 5: 범인은 머리가 어두운 색이였던 것 같아",
+    6: "단서 6: 범인은 남자인 것 같아"
 };
 
 /* 단서 클릭 */
@@ -532,12 +532,12 @@ function closeModal() {
 function confirmChoice() {
     closeModal();
 
-    const isCorrect = (chosen === "이강");
+    const isCorrect = (chosen === "김도헌");
 
     // 👉 결과 화면 문구
     let text = "";
     if (isCorrect) {
-        text = "이강은 범인이 맞습니다.";
+        text = "김도헌은 범인이 맞습니다.";
     } else {
         text = `${chosen}은 범인이 아니였습니다.`;
     }
@@ -595,4 +595,5 @@ async function checkLogin() {
 
 </body>
 </html>
+
 
