@@ -368,8 +368,12 @@ h1 {
     </div>
 
     <div style="text-align:center;">
-      <img id="suspectImg" style="max-width:100%; border-radius:12px;">
-      <p id="suspectName" style="margin-top:12px;"></p>
+      <div style="display:flex; flex-direction:column; gap:12px; align-items:center;">
+      <img id="suspectImg1" style="max-width:100%; border-radius:12px;">
+      <img id="suspectImg2" style="max-width:100%; border-radius:12px;">
+    </div>
+
+    <p id="suspectName" style="margin-top:12px; text-align:center;"></p>
     </div>
   </div>
 </div>
@@ -638,15 +642,18 @@ async function checkLogin() {
 }
 function openSuspectInfo(name) {
   const suspectImages = {
-    "양은별": "yang.jpg",
-    "심준영": "shim.jpg",
-    "김도헌": "kimd.jpg",
-    "이현승": "lee.jpg",
-    "김서연": "kims.jpg",
-    "유현지": "yoo.jpg"
+    "양은별": ["yang1.jpg", "yang2.jpg"],
+    "심준영": ["shim1.jpg", "shim2.jpg"],
+    "김도헌": ["kimd1.jpg", "kimd2.jpg"],
+    "이현승": ["lee1.jpg", "lee2.jpg"],
+    "김서연": ["kims1.jpg", "kims2.jpg"],
+    "유현지": ["yoo1.jpg", "yoo2.jpg"]
   };
 
-  document.getElementById("suspectImg").src = suspectImages[name];
+  const imgs = suspectImages[name];
+
+  document.getElementById("suspectImg1").src = imgs[0];
+  document.getElementById("suspectImg2").src = imgs[1];
   document.getElementById("suspectName").innerText = name;
 
   showScreen("suspectPhoto");
@@ -655,6 +662,7 @@ function openSuspectInfo(name) {
 
 </body>
 </html>
+
 
 
 
