@@ -369,8 +369,11 @@ h1 {
 
     <div style="text-align:center;">
       <div style="display:flex; flex-direction:column; gap:12px; align-items:center;">
-      <img id="suspectImg1" style="max-width:100%; border-radius:12px;">
-      <img id="suspectImg2" style="max-width:100%; border-radius:12px;">
+      <div id="suspectImages"
+        style="display:flex; flex-direction:column; gap:12px; align-items:center;">
+   </div>
+
+   <p id="suspectName" style="margin-top:12px; text-align:center;"></p>
     </div>
 
     <p id="suspectName" style="margin-top:12px; text-align:center;"></p>
@@ -642,26 +645,34 @@ async function checkLogin() {
 }
 function openSuspectInfo(name) {
   const suspectImages = {
-    "양은별": ["yang1.jpg", "yang2.jpg"],
-    "심준영": ["shim1.jpg", "shim2.jpg"],
+    "양은별": ["yang1.jpg", "yang2.jpg" "yang3.jpg"],
+    "심준영": ["shim1.jpg", "shim2.jpg", "shim3.jpg"],   // ✅ 3장
     "김도헌": ["kimd1.jpg", "kimd2.jpg"],
-    "이현승": ["lee1.jpg", "lee2.jpg"],
+    "이현승": ["lee1.jpg", "lee2.jpg"],     // ✅ 3장
     "김서연": ["kims1.jpg", "kims2.jpg"],
-    "유현지": ["yoo1.jpg", "yoo2.jpg"]
+    "유현지": ["yoo1.jpg", "yoo2.jpg", "yoo3.jpg"]
   };
 
-  const imgs = suspectImages[name];
+  const container = document.getElementById("suspectImages");
+  container.innerHTML = ""; // 🔥 이전 이미지 전부 제거
 
-  document.getElementById("suspectImg1").src = imgs[0];
-  document.getElementById("suspectImg2").src = imgs[1];
+  suspectImages[name].forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.style.maxWidth = "100%";
+    img.style.borderRadius = "12px";
+    img.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
+    container.appendChild(img);
+  });
+
   document.getElementById("suspectName").innerText = name;
-
   showScreen("suspectPhoto");
 }
 </script>
 
 </body>
 </html>
+
 
 
 
