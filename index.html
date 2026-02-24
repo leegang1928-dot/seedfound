@@ -271,12 +271,12 @@ h1 {
         <!-- 단서 관리 -->
         <div id="adminClues" style="margin-top:20px; display:none;">
             <div class="clue-grid">
-                <div class="clue locked" onclick="toggleClue(1)">단서 1</div>
-                <div class="clue locked" onclick="toggleClue(2)">단서 2</div>
-                <div class="clue locked" onclick="toggleClue(3)">단서 3</div>
-                <div class="clue locked" onclick="toggleClue(4)">단서 4</div>
-                <div class="clue locked" onclick="toggleClue(5)">단서 5</div>
-                <div class="clue locked" onclick="toggleClue(6)">단서 6</div>
+                <div class="clue locked" onclick="toggleClue(1)">양은별의 주장</div>
+                <div class="clue locked" onclick="toggleClue(2)">심준영의 주장</div>
+                <div class="clue locked" onclick="toggleClue(3)">김도헌의 주장</div>
+                <div class="clue locked" onclick="toggleClue(4)">이현승의 주장</div>
+                <div class="clue locked" onclick="toggleClue(5)">김서연의 주장</div>
+                <div class="clue locked" onclick="toggleClue(6)">유현지의 주장</div>
             </div>
         </div>
     </div>
@@ -287,8 +287,9 @@ h1 {
     <div class="container">
         <h1>범인을 찾아라</h1>
         <div class="tabs">
+            <div class="tab" onclick="showScreen('suspectInfo')">용의자 정보 파일</div>
             <div class="tab" onclick="loadPlayerClues(); showScreen('clue')">단서 수집</div>
-            <div class="tab" onclick="showScreen('suspect')">용의자 탐색</div>
+            <div class="tab" onclick="showScreen('suspect')">최종 범인 선택</div>
         </div>
     </div>
 </div>
@@ -301,12 +302,22 @@ h1 {
         </div>
 
         <div class="clue-grid">
-            <div class="clue locked" data-id="1" onclick="openClue(1)">단서 1</div>
-            <div class="clue locked" data-id="2" onclick="openClue(2)">단서 2</div>
-            <div class="clue locked" data-id="3" onclick="openClue(3)">단서 3</div>
-            <div class="clue locked" data-id="4" onclick="openClue(4)">단서 4</div>
-            <div class="clue locked" data-id="5" onclick="openClue(5)">단서 5</div>
-            <div class="clue locked" data-id="6" onclick="openClue(6)">단서 6</div>
+            <div class="clue locked" data-id="1" onclick="openClue(1)">양은별의 주장</div>
+            <div class="clue locked" data-id="2" onclick="openClue(2)">심준영의 주장</div>
+            <div class="clue locked" data-id="3" onclick="openClue(3)">김도헌의 주장</div>
+            <div class="clue locked" data-id="4" onclick="openClue(4)">이현승의 주장</div>
+            <div class="clue locked" data-id="5" onclick="openClue(5)">김서연의 주장</div>
+            <div class="clue locked" data-id="6" onclick="openClue(6)">유현지의 주장</div>
+        </div>
+            <div style="
+        color: #c94b4b;
+        margin-top: 20px;
+        text-align: center;
+        font-size: 16px;
+        opacity: 0.8;
+         font-style: italic;
+    ">
+        범인은 거짓말을 하고 있습니다..
         </div>
     </div>
 </div>
@@ -327,6 +338,40 @@ h1 {
             <div class="profile" onclick="selectSuspect('유현지')">유현지</div>
         </div>
     </div>
+</div>
+
+<!-- 용의자 정보 파일 -->
+<div id="suspectInfo" class="screen">
+  <div class="container">
+    <div class="top-bar">
+      <div class="back" onclick="showScreen('main')">뒤로가기</div>
+    </div>
+
+    <h1 style="font-size:26px;">용의자 정보 파일</h1>
+
+    <div class="profile-list">
+      <div class="profile" onclick="openSuspectInfo('양은별')">양은별</div>
+      <div class="profile" onclick="openSuspectInfo('심준영')">심준영</div>
+      <div class="profile" onclick="openSuspectInfo('김도헌')">김도헌</div>
+      <div class="profile" onclick="openSuspectInfo('이현승')">이현승</div>
+      <div class="profile" onclick="openSuspectInfo('김서연')">김서연</div>
+      <div class="profile" onclick="openSuspectInfo('유현지')">유현지</div>
+    </div>
+  </div>
+</div>
+
+<!-- 용의자 사진 -->
+<div id="suspectPhoto" class="screen">
+  <div class="container">
+    <div class="top-bar" style="justify-content:flex-end;">
+      <div class="back" onclick="showScreen('suspectInfo')">뒤로가기</div>
+    </div>
+
+    <div style="text-align:center;">
+      <img id="suspectImg" style="max-width:100%; border-radius:12px;">
+      <p id="suspectName" style="margin-top:12px;"></p>
+    </div>
+  </div>
 </div>
 
 <!-- 결과 -->
@@ -391,12 +436,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* 단서 내용 */
 const clueContent = {
-    1: "단서 1: 범인은 키가 컸던거 같아",
+    1: "단서 1: 범인은 키가 컸던거 같아..",
     2: "단서 2: 범인은 사투리를 안썼던 것 같아",
-    3: "단서 3: 범인은 여자인 것 같아",
-    4: "단서 4: 범인은 쌍커풀이 있었던 것 같아",
-    5: "단서 5: 범인은 머리가 어두운 색이였던 것 같아",
-    6: "단서 6: 범인은 남자인 것 같아"
+    3: "단서 3: 범인은 학생회 소속이 아니야",
+    4: "단서 4: 범인은,, 머리에 곱슬기가 강하다고 들었어,,",
+    5: "단서 5: 범인은 괴도키드를 잘 알지 못해",
+    6: "단서 6: 범인은 남자였던거같아.."
 };
 
 /* 단서 클릭 */
@@ -591,9 +636,25 @@ async function checkLogin() {
         alert("정보가 일치하지 않습니다");
     }
 }
+function openSuspectInfo(name) {
+  const suspectImages = {
+    "양은별": "yang.jpg",
+    "심준영": "shim.jpg",
+    "김도헌": "kimd.jpg",
+    "이현승": "lee.jpg",
+    "김서연": "kims.jpg",
+    "유현지": "yoo.jpg"
+  };
+
+  document.getElementById("suspectImg").src = suspectImages[name];
+  document.getElementById("suspectName").innerText = name;
+
+  showScreen("suspectPhoto");
+}
 </script>
 
 </body>
 </html>
+
 
 
